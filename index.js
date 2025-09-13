@@ -1,4 +1,4 @@
-const apiURL = "/api/tickets";
+const apiURL = "http://localhost:5000/api/tickets";
 
 document.getElementById("ticketForm").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -81,7 +81,7 @@ loadTickets();
 
 async function markCompleted(ticketId) {
     try {
-        const res = await fetch(`/api/tickets/${ticketId}/complete`, {
+        const res = await fetch(`http://localhost:5000/api/tickets/${ticketId}/complete`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" }
         });

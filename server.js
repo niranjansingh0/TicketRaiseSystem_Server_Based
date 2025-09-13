@@ -61,26 +61,6 @@ app.post("/api/tickets", async (req, res) => {
     }
 });
 
-// Mark ticket as completed
-app.put("/api/tickets/:id/complete", async (req, res) => {
-    try {
-        const ticketId = req.params.id;
-        const ticket = await Ticket.findByIdAndUpdate(
-            ticketId,
-            { status: "Completed" },
-            { new: true }
-        );
-
-        if (!ticket) return res.status(404).json({ success: false, error: "Ticket not found" });
-
-        res.json({ success: true, ticket });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, error: err.message });
-    }
-});
-
-
 // Start server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
