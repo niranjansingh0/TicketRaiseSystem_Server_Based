@@ -1,0 +1,24 @@
+.env# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Vercel / Deployment
+.vercel/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Optional: build folders (if you create them)
+dist/
+build/
