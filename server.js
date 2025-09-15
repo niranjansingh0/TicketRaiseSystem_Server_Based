@@ -2,13 +2,17 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // Use Render PORT
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve frontend files
+app.use(express.static(path.join(__dirname))); // serves index.html, style.css, etc.
 
 // Connect to MongoDB
 mongoose.connect(process.env.YOUR_MONGO_URI)
@@ -61,6 +65,7 @@ app.post("/api/tickets", async (req, res) => {
     }
 });
 
+// Mark ticket complete
 app.put("/api/tickets/:id/complete", async (req, res) => {
     try {
         const updatedTicket = await Ticket.findByIdAndUpdate(
@@ -79,8 +84,12 @@ app.put("/api/tickets/:id/complete", async (req, res) => {
     }
 });
 
+// Catch-all to serve index.html for any other route (frontend routing)
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
 });

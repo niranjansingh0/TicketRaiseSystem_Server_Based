@@ -77,7 +77,7 @@ async function loadTickets() {
     document.getElementById("completedTickets").textContent = tickets.filter(t => t.status === "Completed").length;
 }
 
-loadTickets();
+
 
 async function markCompleted(ticketId) {
     const btn = document.querySelector(`button[onclick="markCompleted('${ticketId}')"]`);
@@ -113,4 +113,4 @@ async function markCompleted(ticketId) {
     }
 }
 
-
+loadTickets();
