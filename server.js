@@ -85,7 +85,7 @@ app.put("/api/tickets/:id/complete", async (req, res) => {
 });
 
 // Catch-all to serve index.html for any other route (frontend routing)
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
 
