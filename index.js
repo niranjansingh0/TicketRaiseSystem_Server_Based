@@ -80,6 +80,13 @@ async function loadTickets() {
 loadTickets();
 
 async function markCompleted(ticketId) {
+    const btn = document.querySelector(`button[onclick="markCompleted('${ticketId}')"]`);
+    if (!btn) return;
+
+    btn.textContent = "Submitting... ⏳";
+    btn.disabled = true;
+    btn.style.cursor = "not-allowed";
+
     try {
         const res = await fetch(`http://localhost:5000/api/tickets/${ticketId}/complete`, {
             method: "PUT",
@@ -88,12 +95,22 @@ async function markCompleted(ticketId) {
 
         const data = await res.json();
         if (data.success) {
-            loadTickets(); // refresh the tickets list
+            btn.textContent = "Completed ✅";
+            btn.style.background = "#40c057";
+            // optional: reload ticket list if you want real-time update
+            setTimeout(() => loadTickets(), 1000);
         } else {
             alert("Error: " + (data.error || "Unknown error"));
+            btn.textContent = "Retry";
+            btn.disabled = false;
+            btn.style.cursor = "pointer";
         }
     } catch (err) {
         alert("Error updating ticket status");
+        btn.textContent = "Retry";
+        btn.disabled = false;
+        btn.style.cursor = "pointer";
     }
 }
+
 

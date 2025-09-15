@@ -61,6 +61,25 @@ app.post("/api/tickets", async (req, res) => {
     }
 });
 
+app.put("/api/tickets/:id/complete", async (req, res) => {
+    try {
+        const updatedTicket = await Ticket.findByIdAndUpdate(
+            req.params.id,
+            { status: "Completed" },
+            { new: true }
+        );
+
+        if (!updatedTicket) {
+            return res.status(404).json({ success: false, error: "Ticket not found" });
+        }
+
+        res.json({ success: true, ticket: updatedTicket });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+
 // Start server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
